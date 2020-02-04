@@ -1,0 +1,131 @@
+<style type="text/css">
+  /*.table { display: none; }*/
+</style>
+
+<!-- 1. Define the template -->
+<div id="widget1">
+
+  <div id="spinner" class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+
+  <table class="table">
+  <thead>
+     <tr id="structure">
+     </tr>
+
+  </thead>
+  <tbody id="table-body">
+
+  </tbody>
+  </table>
+</div>
+</div>
+
+
+
+
+<script>
+  // thisDoc refers to the "importee", which is blog-post.html
+  var thisDoc = document.currentScript.ownerDocument;
+
+  // thatDoc refers to the "importer", which is index.html
+  var thatDoc = document;
+
+  // grab the contents of the #blog-post from this document
+  // and append it to the importing document.
+  var content = thisDoc.querySelector('#widget1');
+
+  //include in document
+  thatDoc.body.querySelector("widget1").appendChild(thisDoc.importNode(content, true));
+</script>
+
+
+<script type="text/javascript">
+  
+
+  getStruct();
+
+  setTable();
+
+
+  function getStruct(){
+    var xhr = new XMLHttpRequest();
+
+      xhr.open('GET', 'https://g2.qzo.su/api/test/'+ language +'LableTable?', false);
+      // xhr.open('GET', 'http://shipssales.com/api_gs_mobile.php', false);
+      xhr.send();
+
+      if (xhr.status != 200) {
+        
+        alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+
+      }else{
+
+        console.log(xhr.responseText);
+        var html = '';
+        var data = JSON.parse(xhr.responseText);
+        console.log(xhr.responseText);
+
+        // if(data['result'].length > 0){
+
+          for (var key in data) {
+          
+            html +='<th scope="col">'+data[key]+'</th>';
+            
+          }
+
+          document.getElementById("structure").innerHTML = html;
+
+
+        }
+
+  }
+
+  function setTable(){
+
+    var xhr = new XMLHttpRequest();
+
+      xhr.open('GET', 'https://g2.qzo.su/api/test/getListUsers', false);
+      xhr.send();
+
+      if (xhr.status != 200) {
+        
+        alert( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+
+      }else{
+
+        
+        var html = '';
+        var data = JSON.parse(xhr.responseText);
+        document.getElementById("spinner").style.display = "none";
+
+        if(data['result'].length > 0){
+          for (var key in data['result']) {
+          
+            html += '<tr>\
+                    <th scope="row">'+ data['result'][key]['id'] +'</th>\
+                    <td>'+ data['result'][key]['name'] +'</td>\
+                    <td>'+ data['result'][key]['surname'] +'</td>\
+                    <td>'+ data['result'][key]['status'] +'</td>';
+            
+          }
+
+          document.getElementById("table-body").innerHTML = html;
+          document.querySelector(".table").style.display = "table";
+
+        }else{
+          document.getElementById("table-body").innerHTML = "<p>Записей нет</p>";
+        }
+
+      }
+
+
+
+  }
+
+
+
+
+</script>
+

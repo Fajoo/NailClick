@@ -1,0 +1,31 @@
+
+<div id="widget3">
+	<select class="form-control oleg">
+	  <option>Default select1</option>
+	  <option>Default select2</option>
+	</select>
+
+	<button type="button" id="actionTable" class="btn btn-secondary">Secondary</button>
+</div>
+
+<script>
+  // thisDoc refers to the "importee", which is blog-post.html
+  var thisDoc = document.currentScript.ownerDocument;
+
+  // thatDoc refers to the "importer", which is index.html
+  var thatDoc = document;
+
+  // grab the contents of the #blog-post from this document
+  // and append it to the importing document.
+  var content = thisDoc.querySelector('#widget3');
+
+  //include in document
+  thatDoc.body.querySelector("widget3").appendChild(thisDoc.importNode(content, true));
+</script>
+
+<script type="text/javascript">
+	actionTable.onclick = function(event) {
+    language = 'eng';
+		getStruct();
+	}
+</script>
