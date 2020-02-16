@@ -72,16 +72,6 @@ class Organizations extends _MainModel{
     }
 
 
-    //Вывод всех организаций
-    //http://site/api/organization/getAllOrganizations
-    public function getAllOrganizations(){
-        $stmt = self::$db->prepare("SELECT * FROM organizations");
-        $result_query = $stmt->execute(array());
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        _MainModel::viewJSON($rows);
-    }
-
-
     //Редактирование logo_url карточки организации
     //http://site/api/organization/editLogoUrl?id=3&logo_url=testedit
     public function editLogoUrl(){
