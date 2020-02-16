@@ -23,11 +23,6 @@ class OrganizationPresenter extends _MainPresenter {
 			echo (new Organizations())->getCardOrganization();
 	} 
 
-	//Вывод всех организаций
-	public function getAllOrganizations(){
-			echo (new Organizations())->getAllOrganizations();
-	} 
-
 	//Редактирование logo_url карточки организации
 	public function editLogoUrl(){
 			echo (new Organizations())->editLogoUrl();
@@ -38,27 +33,32 @@ class OrganizationPresenter extends _MainPresenter {
 			echo (new Organizations())->addCardStaff();
 	} 
 
-		//Редактирование карточки в таблице staff
+	//Редактирование карточки в таблице staff
 	public function editCardStaff(){
 			echo (new Organizations())->editCardStaff();
 	} 
 
-		//Удаление карточки в таблице staff
+	//Удаление карточки в таблице staff
 	public function deleteCardStaff(){
 			echo (new Organizations())->deleteCardStaff();
 	} 
 
-		//Добавление карточки в таблице staff_payments
+	//Вывод списка сотрудников салона (таблица stuff)
+	public function getAllStaff(){
+			echo (new Organizations())->getAllStaff();
+	} 
+	
+	//Добавление карточки в таблице staff_payments
 	public function addCardStaffPayments(){
 			echo (new Organizations())->addCardStaffPayments();
 	} 
 
-			//Редактирование карточки в таблице staff_payments
+	//Редактирование карточки в таблице staff_payments
 	public function editCardStaffPayments(){
 			echo (new Organizations())->editCardStaffPayments();
 	} 
 
-		//Удаление карточки в таблице staff_payments
+	//Удаление карточки в таблице staff_payments
 	public function deleteCardStaffPayments(){
 			echo (new Organizations())->deleteCardStaffPayments();
 	} 

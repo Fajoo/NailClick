@@ -149,10 +149,18 @@ class Organizations extends _MainModel{
             $result = _MainModel::table("staff")->delete(array('id' => $_GET['id']))->send();
         }
     }
+    
+
+    //Вывод списка сотрудников салона (таблица stuff)
+    //http://site/api/organization/getAllStaff
+    public function getAllStaff(){
+        $result = _MainModel::table("staff")->get()->send();
+        _MainModel::viewJSON($result);
+    }
 
 
     //Добавление карточки в таблицу staff_payments
-    // http://site/api/organization/addCardStaffPayments?staff_id=1&payer_id=6&sum=111
+    //http://site/api/organization/addCardStaffPayments?staff_id=1&payer_id=6&sum=111
     public function addCardStaffPayments(){
         if (!isset($_GET['staff_id']) || !isset($_GET['payer_id']) || 
             !isset($_GET['sum'])) {
