@@ -133,5 +133,12 @@ class Users extends _MainModel{
             $result = _MainModel::table("user_coordinates")->delete(array('id' => $_GET['id']))->send();
         }
     }
+
+    //Список геоточек и радиусов
+    //http://site/api/user/getCoorUser
+    public function getCoorUser(){
+            $result = _MainModel::table("user_coordinates")->get()->send();    
+            _MainModel::viewJSON($result);
+    }
 }
 ?>
