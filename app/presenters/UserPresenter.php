@@ -43,7 +43,7 @@ class UserPresenter extends _MainPresenter {
 			echo (new Users())->getCardCoorUser();
 	}
 
-	//Вывод данных карточки пользователя с данными координат
+	//Вывод данных карточки пользователя с данными координат.
 	public function deleteCoorUser(){
 			echo (new Users())->deleteCoorUser();
 	}

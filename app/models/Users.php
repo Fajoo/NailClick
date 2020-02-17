@@ -124,7 +124,7 @@ class Users extends _MainModel{
         }
     }
 
-    //Удаление координат пользователя
+    //Удаление координат пользователя.
     //http://site/api/user/deleteCoorUser?id=1
     public function deleteCoorUser(){
         if (!isset($_GET['id'])){
