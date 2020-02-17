@@ -28,25 +28,27 @@ class Users extends _MainModel{
         }
     }
 
-    //Добавление токена пользователя
-    //http://site/api/user/addTokenUser?user_id=3&creation_time=15:00:00&session_data=2020-02-12
+     //Добавление токена пользователя
+    //http://site/api/user/addTokenUser?key=1&user_id=3&creation_time=15:00:00&session_data=2020-02-12
     public function addTokenUser(){
-        if (!isset($_GET['user_id']) || !isset($_GET['creation_time']) ||
+        if (!isset($_GET['key']) || !isset($_GET['user_id']) || !isset($_GET['creation_time']) ||
             !isset($_GET['session_data'])) {
                 _MainModel::viewJSON(["error"=>"Empty params"]);; 
         }else{
-                $result = _MainModel::table("users_tokens")->add(array('user_id' => $_GET['user_id'], 'creation_time' => $_GET['creation_time'], 'session_data' => $_GET['session_data']))->send();
+                $result = _MainModel::table("users_tokens")->add(array('key' => $_GET['key'],'user_id' => $_GET['user_id'], 'creation_time' => $_GET['creation_time'], 'session_data' => $_GET['session_data']))->send();
                 _MainModel::viewJSON($result);
         }
     }
 
     //Удаление токена пользователя
-    //http://site/api/user/deleteTokenUser?key_id=1
+    //http://site/api/user/deleteTokenUser?key=1
     public function deleteTokenUser(){
-        if (!isset($_GET['key_id'])){
+        if (!isset($_GET['key'])){
             _MainModel::viewJSON(["error"=>"Empty ID"]);
         }else{
-            $result = _MainModel::table("users_tokens")->delete(array('key_id' => $_GET['key_id']))->send();
+            $id = $_GET['key'];
+            $stmt = self::$db->prepare("DELETE FROM users_tokens WHERE users_tokens.key='$id'");
+            $result_query = $stmt->execute(array());
         }
     }
 
