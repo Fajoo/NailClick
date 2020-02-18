@@ -47,6 +47,12 @@ class UserPresenter extends _MainPresenter {
 	public function deleteCoorUser(){
 			echo (new Users())->deleteCoorUser();
 	}
+
+	//Список геоточек и радиусов
+	public function getCoorUser(){
+			echo (new Users())->getCoorUser();
+	}
+
 }
 
 ?>
