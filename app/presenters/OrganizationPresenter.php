@@ -62,6 +62,11 @@ class OrganizationPresenter extends _MainPresenter {
 	public function deleteCardStaffPayments(){
 			echo (new Organizations())->deleteCardStaffPayments();
 	} 
+
+	//Поиск по организациям
+	public function searchAllOrganization(){
+			echo (new Organizations())->searchAllOrganization();
+	} 
 	
 }
 ?>

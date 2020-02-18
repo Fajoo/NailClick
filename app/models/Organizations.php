@@ -2,7 +2,7 @@
 class Organizations extends _MainModel{
 
 	//Добавление карточки организации
-    // http://site/api/organization/addCardOrganization?name=testt&adress=testt&logo_url=testt&coordinate_longitude=0.1&coordinate_latitude=0.2&status=blocked
+    // https://site/api/organization/addCardOrganization?name=testt&adress=testt&logo_url=testt&coordinate_longitude=0.1&coordinate_latitude=0.2&status=blocked
     public function addCardOrganization(){
         if (!isset($_GET['name']) || !isset($_GET['adress']) || 
         	!isset($_GET['logo_url']) || !isset($_GET['coordinate_longitude']) ||
@@ -17,7 +17,7 @@ class Organizations extends _MainModel{
 
 
     //Редактирование карточки организации
-    //http://site/api/organization/editCardOrganization?id=3&name=test5&adress=test5&logo_url=test5&coordinate_longitude=0.999&coordinate_latitude=0.277&status=active
+    //https://site/api/organization/editCardOrganization?id=3&name=test5&adress=test5&logo_url=test5&coordinate_longitude=0.999&coordinate_latitude=0.277&status=active
     public function editCardOrganization(){
         if (!isset($_GET['id'])){
             _MainModel::viewJSON(["error"=>"Empty ID"]);            
@@ -48,7 +48,7 @@ class Organizations extends _MainModel{
 
 
     //Удаление карточки организации
-    //http://site/api/organization/deleteCardOrganization?id=4
+    //https://site/api/organization/deleteCardOrganization?id=4
     public function deleteCardOrganization(){
         if (empty($_GET ['id'])){
             _MainModel::viewJSON(["error"=>"Empty ID"]);
@@ -60,7 +60,7 @@ class Organizations extends _MainModel{
 
 
     //Вывод карточки организации
-    //http://site/api/organization/getCardOrganization?id=3
+    //https://site/api/organization/getCardOrganization?id=3
     public function getCardOrganization(){
         if (!isset($_GET['id'])){
             _MainModel::viewJSON(["error"=>"Empty ID"]);            
@@ -73,7 +73,7 @@ class Organizations extends _MainModel{
 
 
     //Редактирование logo_url карточки организации
-    //http://site/api/organization/editLogoUrl?id=3&logo_url=testedit
+    //https://site/api/organization/editLogoUrl?id=3&logo_url=testedit
     public function editLogoUrl(){
         if (!isset($_GET['id'])){
             _MainModel::viewJSON(["error"=>"Empty ID"]);            
@@ -89,7 +89,7 @@ class Organizations extends _MainModel{
     }
 
     //Добавление карточки в таблицу staff
-    // http://site/api/organization/addCardStaff?user_id=6&organization_id=1&position=studio administrator&status=processing&end_date=2020-03-12
+    // https://site/api/organization/addCardStaff?user_id=6&organization_id=1&position=studio administrator&status=processing&end_date=2020-03-12
     public function addCardStaff(){
         if (!isset($_GET['user_id']) || !isset($_GET['organization_id']) || 
             !isset($_GET['position']) || !isset($_GET['status']) ||
@@ -103,7 +103,7 @@ class Organizations extends _MainModel{
 
 
     //Редактирование карточки в таблице staff
-    //http://site/api/organization/editCardStaff?id=2&user_id=8&organization_id=3&position=owner&status=rejected&end_date=2020-08-11
+    //https://site/api/organization/editCardStaff?id=2&user_id=8&organization_id=3&position=owner&status=rejected&end_date=2020-08-11
     public function editCardStaff(){
         if (!isset($_GET['id'])){
             _MainModel::viewJSON(["error"=>"Empty ID"]);            
@@ -130,7 +130,7 @@ class Organizations extends _MainModel{
     }
 
     //Удаление карточки в таблице staff
-    //http://site/api/organization/deleteCardStaff?id=3
+    //https://site/api/organization/deleteCardStaff?id=3
     public function deleteCardStaff(){
         if (empty($_GET ['id'])){
             _MainModel::viewJSON(["error"=>"Empty ID"]);
@@ -142,7 +142,7 @@ class Organizations extends _MainModel{
     
 
     //Вывод списка сотрудников салона (таблица stuff)
-    //http://site/api/organization/getAllStaff
+    //https://site/api/organization/getAllStaff
     public function getAllStaff(){
         $result = _MainModel::table("staff")->get()->send();
         _MainModel::viewJSON($result);
@@ -150,7 +150,7 @@ class Organizations extends _MainModel{
 
 
     //Добавление карточки в таблицу staff_payments
-    //http://site/api/organization/addCardStaffPayments?staff_id=1&payer_id=6&sum=111
+    //https://site/api/organization/addCardStaffPayments?staff_id=1&payer_id=6&sum=111
     public function addCardStaffPayments(){
         if (!isset($_GET['staff_id']) || !isset($_GET['payer_id']) || 
             !isset($_GET['sum'])) {
@@ -162,7 +162,7 @@ class Organizations extends _MainModel{
     }
 
     //Редактирование карточки в таблице staff_payments
-    //http://site/api/organization/editCardStaffPayments?id=1&staff_id=2&payer_id=7&sum=322
+    //https://site/api/organization/editCardStaffPayments?id=1&staff_id=2&payer_id=7&sum=322
     public function editCardStaffPayments(){
         if (!isset($_GET['id'])){
             _MainModel::viewJSON(["error"=>"Empty ID"]);            
@@ -184,13 +184,33 @@ class Organizations extends _MainModel{
     }
 
     //Удаление карточки в таблице staff_payments
-    //http://site/api/organization/deleteCardStaffPayments?id=2
+    //https://site/api/organization/deleteCardStaffPayments?id=2
     public function deleteCardStaffPayments(){
         if (empty($_GET ['id'])){
             _MainModel::viewJSON(["error"=>"Empty ID"]);
         }else{
 
             $result = _MainModel::table("staff_payments")->delete(array('id' => $_GET['id']))->send();
+        }
+    }
+
+    //Вывод всех организаций (фильтрация, пагинация, поиск)
+    //https://site/api/organization/searchAllOrganization?search=test&limit=1,2
+    public function searchAllOrganization(){
+        if (!isset($_GET['search'])) {
+                _MainModel::viewJSON(["error"=>"Empty params"]); 
+        } else {
+            $search = $_GET['search'];
+            $LM = $_GET['limit'];
+            $stmt = self::$db->prepare("SELECT * FROM `organizations` WHERE `name` LIKE '%$search%' OR `adress` LIKE '%$search%' LIMIT $LM");
+            $result_query = $stmt->execute(array());
+            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+            
+        if ($rows) {
+                _MainModel::viewJSON($rows);
+            } else {
+                _MainModel::viewJSON(["error" => "Nothing found"]);
+            }
         }
     }
 
