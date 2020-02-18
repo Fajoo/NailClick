@@ -65,7 +65,6 @@ class Users extends _MainModel{
                  _MainModel::viewJSON(["error"=>"Empty avatar_url"]);      
             }
 
-
         }
     }
 
@@ -126,7 +125,8 @@ class Users extends _MainModel{
         }
     }
 
-    //Удаление координат пользователя.
+
+    //Удаление координат пользователя
     //http://site/api/user/deleteCoorUser?id=1
     public function deleteCoorUser(){
         if (!isset($_GET['id'])){
@@ -135,6 +135,7 @@ class Users extends _MainModel{
             $result = _MainModel::table("user_coordinates")->delete(array('id' => $_GET['id']))->send();
         }
     }
+
 
     //Список геоточек и радиусов
     //http://site/api/user/getCoorUser

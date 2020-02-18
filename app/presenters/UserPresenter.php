@@ -52,6 +52,7 @@ class UserPresenter extends _MainPresenter {
 	public function getCoorUser(){
 			echo (new Users())->getCoorUser();
 	}
+
 }
 
 ?>
