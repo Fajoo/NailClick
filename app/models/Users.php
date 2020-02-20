@@ -8,9 +8,9 @@ class Users extends _MainModel
     public function addCardUser()
     {
         if (
-            empty($_GET['avatar_url']) || empty($_GET['role']) ||
-            empty($_GET['status']) || empty($_GET['parent_id']) ||
-            empty($_GET['rating'])
+            !_MainModel::is_var('avatar_url') || !_MainModel::is_var('role') ||
+            !_MainModel::is_var('status') || !_MainModel::is_var('parent_id') ||
+            !_MainModel::is_var('rating')
         ) {
             _MainModel::viewJSON([
                 "error" => ["id" => 0, "type" => "Empty params"]
@@ -26,9 +26,9 @@ class Users extends _MainModel
     public function addСoorUser()
     {
         if (
-            empty($_GET['user_id']) || empty($_GET['coordinate_longitude']) ||
-            empty($_GET['coordinate_latitude']) || empty($_GET['radius_km']) ||
-            empty($_GET['radius_unit']) || empty($_GET['convenient_time'])
+            !_MainModel::is_var('user_id') || !_MainModel::is_var('coordinate_longitude') ||
+            !_MainModel::is_var('coordinate_latitude') || !_MainModel::is_var('radius_km') ||
+            !_MainModel::is_var('radius_unit') || !_MainModel::is_var('convenient_time')
         ) {
             _MainModel::viewJSON([
                 "error" => ["id" => 0, "type" => "Empty params"]
@@ -44,8 +44,8 @@ class Users extends _MainModel
     public function addTokenUser()
     {
         if (
-            empty($_GET['key']) || empty($_GET['user_id']) || empty($_GET['creation_time']) ||
-            empty($_GET['session_data'])
+            !_MainModel::is_var('key') || !_MainModel::is_var('user_id') || !_MainModel::is_var('creation_time') ||
+            !_MainModel::is_var('session_data')
         ) {
             _MainModel::viewJSON([
                 "error" => ["id" => 0, "type" => "Empty params"]
@@ -60,7 +60,7 @@ class Users extends _MainModel
     //http://site/api/user/deleteTokenUser?key=1
     public function deleteTokenUser()
     {
-        if (empty($_GET['key'])) {
+        if (!_MainModel::is_var('key')) {
             _MainModel::viewJSON([
                 "error" => ["id" => 1, "type" => "Empty ID"]
             ]);
@@ -75,12 +75,12 @@ class Users extends _MainModel
     //http://site/api/user/editAvatarUser?id=3&avatar_url=testedit
     public function editAvatarUser()
     {
-        if (empty($_GET['id'])) {
+        if (!_MainModel::is_var('id')) {
             _MainModel::viewJSON([
                 "error" => ["id" => 0, "type" => "Empty ID"]
             ]);
         } else {
-            if (!empty($_GET['avatar_url'])) {
+            if (_MainModel::is_var('avatar_url')) {
                 $result = _MainModel::table("users_cards")->edit(array('avatar_url' => $_GET['avatar_url']), array('id' => $_GET['id']))->send();
             } else {
                 _MainModel::viewJSON([
@@ -94,28 +94,28 @@ class Users extends _MainModel
     //http://site/api/user/editCardUser?id=3&avatar_url=testedit&role=testedit&rating=1000
     public function editCardUser()
     {
-        if (empty($_GET['id'])) {
+        if (!_MainModel::is_var('id')) {
             _MainModel::viewJSON([
                 "error" => ["id" => 1, "type" => "Empty ID"]
             ]);
         } else {
             $arr = [];
-            if (!empty($_GET['avatar_url'])) {
+            if (_MainModel::is_var('avatar_url')) {
                 $arr['avatar_url'] = $_GET['avatar_url'];
             }
-            if (!empty($_GET['role'])) {
+            if (_MainModel::is_var('role')) {
                 $arr['role'] = $_GET['role'];
             }
-            if (!empty($_GET['status'])) {
+            if (_MainModel::is_var('status')) {
                 $arr['status'] = $_GET['status'];
             }
-            if (!empty($_GET['parent_id'])) {
+            if (_MainModel::is_var('parent_id')) {
                 $arr['parent_id'] = $_GET['parent_id'];
             }
-            if (!empty($_GET['rating'])) {
+            if (_MainModel::is_var('rating')) {
                 $arr['rating'] = $_GET['rating'];
             }
-            if (!empty($_GET['language'])) {
+            if (_MainModel::is_var('language')) {
                 $arr['language'] = $_GET['language'];
             }
             $result = _MainModel::table("users_cards")->edit($arr, array('id' => $_GET['id']))->send();
@@ -126,7 +126,7 @@ class Users extends _MainModel
     //http://site/api/user/getCardUser?id=3
     public function getCardUser()
     {
-        if (empty($_GET['id'])) {
+        if (!_MainModel::is_var('id')) {
             _MainModel::viewJSON([
                 "error" => ["id" => 1, "type" => "Empty ID"]
             ]);
@@ -141,7 +141,7 @@ class Users extends _MainModel
     //http://site/api/user/getCardCoorUser?id=3
     public function getCardCoorUser()
     {
-        if (empty($_GET['id'])) {
+        if (!_MainModel::is_var('id')) {
             _MainModel::viewJSON([
                 "error" => ["id" => 1, "type" => "Empty ID"]
             ]);
@@ -158,7 +158,7 @@ class Users extends _MainModel
     //http://site/api/user/deleteCoorUser?id=1
     public function deleteCoorUser()
     {
-        if (empty($_GET['id'])) {
+        if (!_MainModel::is_var('id')) {
             _MainModel::viewJSON([
                 "error" => ["id" => 1, "type" => "Empty ID"]
             ]);
