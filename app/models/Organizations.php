@@ -1,7 +1,7 @@
 <?php
 class Organizations extends _MainModel{
 
-	//Добавление карточки организации
+    //Добавление карточки организации
     // https://site/api/organization/addCardOrganization?name=testt&adress=testt&logo_url=testt&coordinate_longitude=0.1&coordinate_latitude=0.2&status=blocked
     public function addCardOrganization(){
         if (!isset($_GET['name']) || !isset($_GET['adress']) || 
@@ -201,8 +201,8 @@ class Organizations extends _MainModel{
                 _MainModel::viewJSON(["error"=>"Empty params"]); 
         } else {
             $search = $_GET['search'];
-            $LM = $_GET['limit'];
-            $stmt = self::$db->prepare("SELECT * FROM `organizations` WHERE `name` LIKE '%$search%' OR `adress` LIKE '%$search%' LIMIT $LM");
+            $lm = $_GET['limit'];
+            $stmt = self::$db->prepare("SELECT * FROM `organizations` WHERE `name` LIKE '%$search%' OR `adress` LIKE '%$search%' LIMIT $lm");
             $result_query = $stmt->execute(array());
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); 
             
