@@ -482,6 +482,21 @@ class _MainModel extends DB{
         
 
     }
+ 
+    public static function is_var($key){
+
+        if(array_key_exists($key, self::$params_url)){
+            
+            if(self::$params_url[$key] != ''){
+
+                return true;
+
+            }else
+                return false;
+
+        } else 
+            return false;
+    }
 
     private function setParams(){
 
@@ -490,7 +505,7 @@ class _MainModel extends DB{
         if(count($_POST)){
 
             foreach ($_POST as $k => $v) {
-                if(!empty($v)){
+                if( isset($v) ){
                     self::$params_url[$k] = trim(filter_input(INPUT_POST, $k), $allowed_char);
                 }
             }
@@ -501,14 +516,12 @@ class _MainModel extends DB{
 
             foreach ($_GET as $k => $v) {
 
-                if(!empty($v)){
+                if( isset($v) ){
                     self::$params_url[$k] = trim(filter_input(INPUT_GET, $k), $allowed_char);
                 }
                 
             }
-
         }
-
     }
 
     /**
