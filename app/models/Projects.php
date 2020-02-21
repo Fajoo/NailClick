@@ -15,6 +15,7 @@ class Projects extends _MainModel
 		$result = _MainModel::table("projects")->add(array('name' => $_GET['name'], 'description' => $_GET['description'], 'status' => $_GET['status'], 'photo_folder_id' => $_GET['photo_folder_id']))->send();
         _MainModel::viewJSON(["id" => $result]);
 	}
+	}
 
 	// Удаление проекта
     public function DeleteProject()
