@@ -29,6 +29,7 @@ class Projects extends _MainModel
         $stmt = self::$db->prepare("DELETE FROM projects WHERE projects.id='$id'");
         $result_query = $stmt->execute(array());
     }
+	}
 
     // Вывод проекта по id
     public function ShowProject()
@@ -42,6 +43,7 @@ class Projects extends _MainModel
         $result = _MainModel::table("projects")->get()->filter(array('id' => $_GET['id']))->send();
         _MainModel::viewJSON($result);
     }
+	}
 
     // Редактирование проекта
     public function EditProject()
@@ -73,4 +75,5 @@ class Projects extends _MainModel
 
         $result = _MainModel::table("projects")->edit($arr, array('id' => $_GET['id']))->send();
     }
+	}
 }
