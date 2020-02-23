@@ -2,23 +2,23 @@
 class Organizations extends _MainModel{
 
     //Добавление карточки организации
-    //https://site/api/organization/addCardOrganization?name=testt&adress=testt&logo_url=testt&coordinate_longitude=0.1&coordinate_latitude=0.2&status=blocked
+    //https://site/api/organization/addCardOrganization?name=testt&address=testt&logo_url=testt&coordinate_longitude=0.1&coordinate_latitude=0.2&status=blocked
     public function addCardOrganization(){
-        if (!_MainModel::is_var($_GET['name']) || !_MainModel::is_var($_GET['adress']) || 
+        if (!_MainModel::is_var($_GET['name']) || !_MainModel::is_var($_GET['address']) || 
             !_MainModel::is_var($_GET['logo_url']) || !_MainModel::is_var($_GET['coordinate_longitude']) ||
             !_MainModel::is_var($_GET['coordinate_latitude']) || !_MainModel::is_var($_GET['status'])) {
                 _MainModel::viewJSON([
                     "error" => ["id" => 0, "type" => "Empty params"]
                 ]); 
         }else{
-                $result = _MainModel::table("organizations")->add(array('name' => $_GET['name'], 'adress' => $_GET['adress'], 'logo_url' => $_GET['logo_url'], 'coordinate_longitude' => $_GET['coordinate_longitude'], 'coordinate_latitude' => $_GET['coordinate_latitude'], 'status' => $_GET['status']))->send();
+                $result = _MainModel::table("organizations")->add(array('name' => $_GET['name'], 'address' => $_GET['address'], 'logo_url' => $_GET['logo_url'], 'coordinate_longitude' => $_GET['coordinate_longitude'], 'coordinate_latitude' => $_GET['coordinate_latitude'], 'status' => $_GET['status']))->send();
                 _MainModel::viewJSON(["id" => $result]);
         }
     }
 
 
     //Редактирование карточки организации
-    //https://site/api/organization/editCardOrganization?id=3&name=test5&adress=test5&logo_url=test5&coordinate_longitude=0.999&coordinate_latitude=0.277&status=active
+    //https://site/api/organization/editCardOrganization?id=3&name=test5&address=test5&logo_url=test5&coordinate_longitude=0.999&coordinate_latitude=0.277&status=active
     public function editCardOrganization(){
         if (!_MainModel::is_var($_GET['id'])){
             _MainModel::viewJSON([
@@ -29,8 +29,8 @@ class Organizations extends _MainModel{
             if(_MainModel::is_var($_GET['name'])){
                 $arr['name'] = $_GET['name'];
             }
-            if(_MainModel::is_var($_GET['adress'])){
-                $arr['adress'] = $_GET['adress'];
+            if(_MainModel::is_var($_GET['address'])){
+                $arr['address'] = $_GET['address'];
             }
             if(_MainModel::is_var($_GET['logo_url'])){
                 $arr['logo_url'] = $_GET['logo_url'];
@@ -219,7 +219,7 @@ class Organizations extends _MainModel{
         }else{
             $search = $_GET['search'];
             $lm = $_GET['limit'];
-            $stmt = self::$db->prepare("SELECT * FROM `organizations` WHERE `name` LIKE '%$search%' OR `adress` LIKE '%$search%' LIMIT $lm");
+            $stmt = self::$db->prepare("SELECT * FROM `organizations` WHERE `name` LIKE '%$search%' OR `address` LIKE '%$search%' LIMIT $lm");
             $result_query = $stmt->execute(array());
             $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); 
             
