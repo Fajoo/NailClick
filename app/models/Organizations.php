@@ -66,7 +66,7 @@ class Organizations extends _MainModel{
     //Вывод карточки организации
     //https://site/api/organization/getCardOrganization?id=3
     public function getCardOrganization(){
-        if (!_MainModel::is_var($_GET['id'])){
+        if (!_MainModel::is_var('id')){
             _MainModel::viewJSON([
                 "error" => ["id" => 1, "type" => "Empty ID"]
             ]);            
