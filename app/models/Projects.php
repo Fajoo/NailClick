@@ -77,4 +77,55 @@ class Projects extends _MainModel
         $result = _MainModel::table("projects")->edit($arr, array('id' => $_GET['id']))->send();
     }
 	}
+
+	// Фильтрация
+	public function ProjectFilter()
+    {
+    if (!_MainModel::is_var('name'))
+    {
+        _MainModel::viewJSON(["error" => ["id" => 1, "type" => "Empty name"]]);
+    } 
+    else
+    {
+        $result = _MainModel::table("projects")->get()->filter(array('name' => $_GET['name']))->send();
+        _MainModel::viewJSON($result);
+    }
+    }
+
+    // Сортировка
+    public function ProjectSort()
+    {
+        $result = _MainModel::table("projects")->get()->sort("name", "asc")->send();
+        _MainModel::viewJSON($result);
+    }
+
+    // Поиск
+    public function ProjectSearch()
+    {
+    if (!_MainModel::is_var('search'))
+    {
+    _MainModel::viewJSON(["error" => ["id" => 1, "type" => "Empty search"]]);
+    }
+    else
+    {
+        $result = _MainModel::table("projects")->get()->filter(array('name'))->search(array('Name' => $_GET['search']))->send();
+        _MainModel::viewJSON($result);
+    }
+    }
+
+    // Пагинация
+    public function ProjectPagin()
+    {
+    if (!_MainModel::is_var('num_page') || !_MainModel::is_var('count'))
+    {
+    _MainModel::viewJSON(["error" => ["id" => 1, "type" => "Empty params"]]);
+    }
+    else
+    {
+        $stmt = self::$db->prepare("SELECT * FROM projects LIMIT $_GET[num_page], $_GET[count]");
+        $result_query = $stmt->execute(array());
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        _MainModel::viewJSON($rows);
+    }
+    }
 }

@@ -25,6 +25,30 @@ class ProjectsPresenter extends _MainPresenter
     {
 		echo (new Projects())->EditProject();
     }
+
+    // Фильтрация
+    public function ProjectFilter()
+    {
+        echo (new Projects())->ProjectFilter();
+    }
+
+    // Сортировка
+    public function ProjectSort()
+    {
+        echo (new Projects())->ProjectSort();
+    }
+
+     // Поиск
+    public function ProjectSearch()
+    {
+        echo (new Projects())->ProjectSearch();
+    }
+
+    // Пагинация
+    public function ProjectPagin()
+    {
+        echo (new Projects())->ProjectPagin();
+    }
 }
 
 ?>
