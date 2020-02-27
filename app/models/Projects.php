@@ -99,33 +99,28 @@ class Projects extends _MainModel
         _MainModel::viewJSON($result);
     }
 
-    // Поиск
-    public function ProjectSearch()
+    // Фильтрация, поиск, пагинация и сортировка
+    public function ShowAllProjects()
     {
-    if (!_MainModel::is_var('search'))
-    {
-    _MainModel::viewJSON(["error" => ["id" => 1, "type" => "Empty search"]]);
+    if (!_MainModel::is_var($_GET['search']) || !_MainModel::is_var($_GET['limit'])) {
+        _MainModel::viewJSON(["error" => ["id" => 0, "type" => "Empty params"]]); 
     }
     else
     {
-        $result = _MainModel::table("projects")->get()->filter(array('name'))->search(array('Name' => $_GET['search']))->send();
-        _MainModel::viewJSON($result);
-    }
-    }
-
-    // Пагинация
-    public function ProjectPagin()
-    {
-    if (!_MainModel::is_var('num_page') || !_MainModel::is_var('count'))
-    {
-    _MainModel::viewJSON(["error" => ["id" => 1, "type" => "Empty params"]]);
-    }
-    else
-    {
-        $stmt = self::$db->prepare("SELECT * FROM projects LIMIT $_GET[num_page], $_GET[count]");
+        $search = $_GET['search'];
+        $lm = $_GET['limit'];
+        $stmt = self::$db->prepare("SELECT * FROM projects WHERE name LIKE %$search% OR adress LIKE %$search% LIMIT $lm ORDER BY name");
         $result_query = $stmt->execute(array());
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        _MainModel::viewJSON($rows);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+            
+        if ($rows)
+        {
+            _MainModel::viewJSON($rows);
+        }
+        else
+        {
+            _MainModel::viewJSON(["error" => ["id" => 1, "type" => "Nothing found"]]); 
+        }
     }
     }
 }
