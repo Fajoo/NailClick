@@ -478,6 +478,21 @@ class _MainModel extends DB
         } else
             return false;
     }
+ 
+    public static function is_var($key){
+
+        if(array_key_exists($key, self::$params_url)){
+            
+            if(self::$params_url[$key] != ''){
+
+                return true;
+
+            }else
+                return false;
+
+        } else 
+            return false;
+    }
 
     private function setParams()
     {
@@ -487,7 +502,11 @@ class _MainModel extends DB
         if (count($_POST)) {
 
             foreach ($_POST as $k => $v) {
+<<<<<<< HEAD
                 if (isset($v)) {
+=======
+                if( isset($v) ){
+>>>>>>> a41c39bd511b239c4231845a0ba49aa23c25583d
                     self::$params_url[$k] = trim(filter_input(INPUT_POST, $k), $allowed_char);
                 }
             }
@@ -497,7 +516,11 @@ class _MainModel extends DB
 
             foreach ($_GET as $k => $v) {
 
+<<<<<<< HEAD
                 if (isset($v)) {
+=======
+                if( isset($v) ){
+>>>>>>> a41c39bd511b239c4231845a0ba49aa23c25583d
                     self::$params_url[$k] = trim(filter_input(INPUT_GET, $k), $allowed_char);
                 }
             }
@@ -568,3 +591,8 @@ class _MainModel extends DB
         return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
     }
 }
+<<<<<<< HEAD
+=======
+
+?>
+>>>>>>> a41c39bd511b239c4231845a0ba49aa23c25583d
