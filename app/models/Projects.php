@@ -86,9 +86,7 @@ class Projects extends _MainModel
     }
     else
     {
-        $search = $_GET['search'];
-        $lm = $_GET['limit'];
-        $stmt = self::$db->prepare("SELECT * FROM projects WHERE name LIKE %$search% OR adress LIKE %$search% LIMIT $lm ORDER BY name");
+        $stmt = self::$db->prepare("SELECT * FROM projects WHERE name LIKE $_GET['search'] OR adress LIKE $_GET['search'] LIMIT $_GET['limit'] ORDER BY name");
         $result_query = $stmt->execute(array());
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC); 
             
